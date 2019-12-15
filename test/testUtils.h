@@ -19,8 +19,6 @@
 
 #include "clog.h"
 
-using ::testing::AssertionResult;
-
 #define ARRAY_LENGTH(A) (sizeof(A) / sizeof(A[0]))
 
 template <typename T>::testing::AssertionResult ArraysEqual(T expected[], T actual[], size_t size) {
@@ -37,7 +35,7 @@ template <typename T>::testing::AssertionResult ArraysEqual(T expected[], T actu
 
 class Adapter {
 public:
-  virtual ~Adapter(){};
+  virtual ~Adapter() = default;
   virtual bool filter(const CLogMessage *) {
     return true;
   };
@@ -45,7 +43,7 @@ public:
 };
 class MockAdapter : public Adapter {
 public:
-  virtual ~MockAdapter(){};
+  virtual ~MockAdapter() = default;
 
   MOCK_METHOD(bool, filter, (const CLogMessage *), (override));
   MOCK_METHOD(void, printer, (const CLogMessage *), (override));

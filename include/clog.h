@@ -195,8 +195,8 @@ typedef enum _CLogLevel {
  * Internal macro producing an enum and an array containing the enum elements as
  * strings.
  */
-#define CLOG_ENUM_WITH_NAMES(TYPENAME, ELEMENTS)                  \
-  typedef enum _##TYPENAME{ELEMENTS(CLOG_ENUM_ELEMENT)} TYPENAME; \
+#define CLOG_ENUM_WITH_NAMES(TYPENAME, ELEMENTS)                   \
+  typedef enum _##TYPENAME{ELEMENTS(CLOG_ENUM_ELEMENT)}(TYPENAME); \
   const char *const TYPENAME##Names[0 ELEMENTS(CLOG_ENUM_COUNT)] = {ELEMENTS(CLOG_ENUM_NAME)};
 
 /**

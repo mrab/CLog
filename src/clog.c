@@ -20,18 +20,26 @@ static const char *EmptyTag = "";
 static char *levelNames[] = {"TRC", "DBG", "INF", "WRN", "ERR", "FTL", "OFF", "UKN"};
 
 #ifdef CLOG_COLOR
-static const char *levelColors[] =
-    {"\x1b[94m", "\x1b[36m", "\x1b[32m", "\x1b[33m", "\x1b[31m", "\x1b[35m", "\x1b[94m", "\x1b[35m"};
+static const char *levelColors[] = {
+    "\x1b[94m", // trace      / light blue
+    "\x1b[36m", // debug      / cyan
+    "\x1b[32m", // info       / green
+    "\x1b[33m", // warning    / yellow
+    "\x1b[31m", // error      / red
+    "\x1b[35m", // fatal err. / magenta
+    "\x1b[94m", // off        / light blue
+    "\x1b[35m"  // unknown    / magenta
+};
+
 static const char *lineHeaderFormat = "%s%s:%s\x1b[0m \x1b[90m%s:%d(%s)\x1b[0m";
 #else
 static const char *lineHeaderFormat = "%s%s:%s %s:%d(%s)";
+
+// Declaring clog_getColor "private" in non color mode
 static const char *clog_getColor(const CLogLevel level);
 #endif
 
 bool clog_checkContext(const CLogContext *ctx) {
-  if (NULL == ctx) {
-    return false;
-  }
   if (NULL == ctx) {
     return false;
   }
@@ -79,19 +87,8 @@ void clog_logMessage(CLogContext *const ctx,
                      const char *const function,
                      const char *const message,
                      ...) {
-  if (NULL == ctx) {
-    return;
-  }
 
-  if (NULL == ctx->adapters || 0U == ctx->adaptersSize) {
-    return;
-  }
-
-  if (NULL == ctx->tagNames || 0U == ctx->numberOfTags) {
-    return;
-  }
-
-  if (NULL == ctx->messageBuffer || ctx->messageBufferSize < 1U) {
+  if (false == clog_checkContext(ctx)) {
     return;
   }
 

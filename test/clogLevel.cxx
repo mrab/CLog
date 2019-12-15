@@ -15,8 +15,6 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-using namespace ::testing;
-
 #include "clog.h"
 #include "testUtils.h"
 
@@ -38,7 +36,7 @@ TEST(testLevels, testLevelNames) {
 
 TEST(testMinLevel, testSetMinLevel) {
   const size_t BufferSize = 1000;
-  std::array<char, BufferSize> buffer;
+  std::array<char, BufferSize> buffer{};
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-local-typedefs"

@@ -17,12 +17,12 @@
 #include "clog.h"
 #include "testUtils.h"
 
-using namespace ::testing;
+using ::testing::ContainerEq;
 
 TEST(testFormatMessage, testFormatMessage) {
   const size_t BufferLength = 128;
   const size_t GuardLength = 3;
-  std::array<char, BufferLength> buffer;
+  std::array<char, BufferLength> buffer{};
   int bufferLength = BufferLength - GuardLength;
   std::fill_n(buffer.begin(), bufferLength, 0);
   std::fill_n(buffer.begin() + bufferLength, GuardLength, 0xFF);
@@ -80,8 +80,8 @@ TEST(testFormatMessage, testFormatMessageNoBuffer) {
 TEST(testFormatMessage, testFormatMessageNoLength) {
   const size_t BufferLength = 128;
   const size_t GuardLength = 3;
-  std::array<char, BufferLength> buffer;
-  std::array<char, BufferLength> bufferReference;
+  std::array<char, BufferLength> buffer{};
+  std::array<char, BufferLength> bufferReference{};
   int bufferLength = BufferLength - GuardLength;
   std::fill_n(buffer.begin(), bufferLength, 0);
   std::fill_n(buffer.begin() + bufferLength, GuardLength, 0xFF);
@@ -110,8 +110,8 @@ TEST(testFormatMessage, testFormatMessageNoLength) {
 TEST(testFormatMessage, testFormatMessageBelowMinimumLength) {
   const size_t BufferLength = 128;
   const size_t GuardLength = 3;
-  std::array<char, BufferLength> buffer;
-  std::array<char, BufferLength> bufferReference;
+  std::array<char, BufferLength> buffer{};
+  std::array<char, BufferLength> bufferReference{};
   int bufferLength = BufferLength - GuardLength;
   std::fill_n(buffer.begin(), bufferLength, 0);
   std::fill_n(buffer.begin() + bufferLength, GuardLength, 0xFF);
@@ -142,8 +142,8 @@ TEST(testFormatMessage, testFormatMessageBelowMinimumLength) {
 TEST(testFormatMessage, testFormatMessageNoMsg) {
   const size_t BufferLength = 128;
   const size_t GuardLength = 3;
-  std::array<char, BufferLength> buffer;
-  std::array<char, BufferLength> bufferReference;
+  std::array<char, BufferLength> buffer{};
+  std::array<char, BufferLength> bufferReference{};
   int bufferLength = BufferLength - GuardLength;
   std::fill_n(buffer.begin(), bufferLength, 0);
   std::fill_n(buffer.begin() + bufferLength, GuardLength, 0xFF);
@@ -158,7 +158,7 @@ TEST(testFormatMessage, testFormatMessageNoMsg) {
 TEST(testFormatMessage, testFormatMessageInsufficientBuffer) {
   const size_t BufferLength = 40;
   const size_t GuardLength = 3;
-  std::array<char, BufferLength> buffer;
+  std::array<char, BufferLength> buffer{};
   std::array<char, BufferLength> bufferReference = {'\033', '[',    '3', '3', 'm', 'W', 'R',    'N',    ':',    'I',
                                                     'O',    '\x1b', '[', '0', 'm', ' ', '\x1b', '[',    '9',    '0',
                                                     'm',    'm',    'y', 'F', 'i', 'l', 'e',    '.',    'c',    ':',
@@ -191,7 +191,7 @@ TEST(testFormatMessage, testFormatMessageInsufficientBuffer) {
 TEST(testFormatMessage, testFormatMessageNullPointersInMessage) {
   const size_t BufferLength = 128;
   const size_t GuardLength = 3;
-  std::array<char, BufferLength> buffer;
+  std::array<char, BufferLength> buffer{};
   int bufferLength = BufferLength - GuardLength;
   std::fill_n(buffer.begin(), bufferLength, 0);
   std::fill_n(buffer.begin() + bufferLength, GuardLength, 0xFF);
@@ -224,7 +224,7 @@ TEST(testFormatMessage, testFormatMessageNullPointersInMessage) {
 TEST(testFormatMessage, testFormatMessageIllegalLevel) {
   const size_t BufferLength = 128;
   const size_t GuardLength = 3;
-  std::array<char, BufferLength> buffer;
+  std::array<char, BufferLength> buffer{};
   int bufferLength = BufferLength - GuardLength;
   std::fill_n(buffer.begin(), bufferLength, 0);
   std::fill_n(buffer.begin() + bufferLength, GuardLength, 0xFF);
@@ -233,7 +233,7 @@ TEST(testFormatMessage, testFormatMessageIllegalLevel) {
   const unsigned int line = 123;
   const char *function = "foo()";
   const char *message = "the message";
-  const CLogLevel level = static_cast<CLogLevel>(1000U);
+  const auto level = static_cast<CLogLevel>(1000U);
   const char *tag = "IO";
   const CLogMessage msg = {
       file,     // const char * file;

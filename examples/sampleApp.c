@@ -50,7 +50,8 @@ typedef struct {
 } FilterSettings;
 
 /**
- * The instance of the filter state.
+ * The instance of the filter state. In the initial state all tags are turned on and only messages
+ * with level error or higher are logged.
  */
 static FilterSettings stdoutFilterSettings = {.enableComm = true, .enablePlugin = true, .minLevel = CLOG_LERR};
 
@@ -93,7 +94,10 @@ void stdoutPrinter(const CLogMessage *message) {
   char buffer[BufferSize];
   int bufferSize = BufferSize;
 
+  // first format the message into buffer
   clog_formatMessage(buffer, &bufferSize, message);
+
+  // then print it
   printf("%s", buffer);
 }
 
