@@ -5,6 +5,7 @@ set(CMAKE_CXX_STANDARD 14)
 
 project (CLog)
 
+
 # External dependencies
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/external)
 
@@ -12,7 +13,7 @@ set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/external)
 set(CMAKE_VERBOSE_MAKEFILE ON CACHE BOOL "ON")
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE BOOL "ON")
 
-set(CLOG_ENABLE_COVERAGE OFF CACHE BOOL "OFF")
+set(CLOG_ENABLE_COVERAGE ON CACHE BOOL "ON")
 set(CLOG_BUILD_SAMPLES ON CACHE BOOL "ON")
 set(CLOG_TEST ON CACHE BOOL "ON")
 
@@ -41,6 +42,8 @@ target_include_directories(CLog
 )
  
 if(CLOG_ENABLE_COVERAGE)
+  include(CodeCoverage)
+
   target_compile_options(CLog
     PRIVATE
     -fprofile-instr-generate -fcoverage-mapping
@@ -134,7 +137,7 @@ if(CLOG_TEST)
       COMMENT "Run tests"
       POST_BUILD 
       WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-      COMMAND LLVM_PROFILE_FILE=CLogTestColor.profraw ${CMAKE_CTEST_COMMAND} -R "^CLogTestColor$" --output-on-failures
+      COMMAND LLVM_PROFILE_FILE=CLogTestColor.profraw ${CMAKE_CTEST_COMMAND}  --output-on-failures -R "^CLogTestColor$"
   )
 endif()
 
@@ -156,15 +159,14 @@ if(CLOG_ENABLE_COVERAGE)
 
     add_custom_target(
       CLogTestColor_coverage
-      COMMAND llvm-profdata-10 merge -sparse CLogTestColor.profraw -o CLogTestColor.profdata
-      COMMAND llvm-cov-10 show CLogTestColor --color --show-region-summary -show-line-counts-or-regions -output-dir=${CMAKE_BINARY_DIR}/CLogTestColor_coverage-llvm-cov -format="html" -instr-profile=CLogTestColor.profdata
+      COMMAND llvm-profdata-11 merge -sparse CLogTestColor.profraw -o CLogTestColor.profdata
+      COMMAND llvm-cov-11 show CLogTestColor --color --show-region-summary -show-line-counts-or-regions -output-dir=${CMAKE_BINARY_DIR}/CLogTestColor_coverage-llvm-cov -format="html" -instr-profile=CLogTestColor.profdata
       DEPENDS CLogTestColor
     )
   endif()
-endif()
 
   if(CLOG_BUILD_SAMPLES)
-    SETUP_TARGET_FOR_COVERAGE_GCOVR_HTML(
+    setup_target_for_coverage_gcovr_html(
       NAME CLogSample_coverage
       EXECUTABLE CLogSample
       DEPENDENCIES CLogSample
