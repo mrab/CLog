@@ -5,6 +5,10 @@ set(CMAKE_CXX_STANDARD 14)
 
 project (CLog)
 
+# External dependencies
+set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/external)
+
+
 set(CMAKE_VERBOSE_MAKEFILE ON CACHE BOOL "ON")
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE BOOL "ON")
 
@@ -16,9 +20,8 @@ message("CLOG Build options:")
 message(" - CLOG_ENABLE_COVERAGE: ${CLOG_ENABLE_COVERAGE}")
 message(" - CLOG_BUILD_SAMPLES:   ${CLOG_BUILD_SAMPLES}")
 message(" - CLOG_TEST:            ${CLOG_TEST}")
+message("CMAKE_MODULE_PATH: ${CMAKE_MODULE_PATH}")
 
-if(CLOG_ENABLE_COVERAGE)
-  include(CodeCoverage)
 
   APPEND_COVERAGE_COMPILER_FLAGS()
 endif()
@@ -26,31 +29,8 @@ endif()
 add_compile_options(-Wall -Werror -Wpedantic -Wextra -Wno-gnu-zero-variadic-macro-arguments)
 
 if(CLOG_TEST)
-  # Download and unpack googletest at configure time
-  configure_file(cmake/CMakeLists.txt.in googletest-download/CMakeLists.txt)
-  execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
-  RESULT_VARIABLE result
-  WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/googletest-download )
-  if(result)
-  message(FATAL_ERROR "CMake step for googletest failed: ${result}")
-  endif()
-
-  execute_process(COMMAND ${CMAKE_COMMAND} --build .
-  RESULT_VARIABLE result
-  WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/googletest-download )
-  if(result)
-  message(FATAL_ERROR "Build step for googletest failed: ${result}")
-  endif()
-
-  # Prevent overriding the parent project's compiler/linker
-  # settings on Windows
-  set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-
-  # Add googletest directly to our build. This defines
-  # the gtest and gtest_main targets.
-  add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/googletest-src
-                  ${CMAKE_CURRENT_BINARY_DIR}/googletest-build
-                  EXCLUDE_FROM_ALL)
+  enable_testing()
+  include(gtest)
 endif()
 
 add_library(CLog 
@@ -62,6 +42,15 @@ target_include_directories(CLog
   include
 )
  
+if(CLOG_ENABLE_COVERAGE)
+  target_compile_options(CLog
+    PRIVATE
+    -fprofile-instr-generate -fcoverage-mapping
+  )
+  add_link_options(-fprofile-instr-generate -fcoverage-mapping)
+endif()
+
+
 add_library(CLogColor
   src/clog.c
 )
@@ -75,6 +64,16 @@ target_compile_definitions(
 	CLogColor
   PUBLIC -DCLOG_COLOR
 )
+
+if(CLOG_ENABLE_COVERAGE)
+  target_compile_options(CLogColor
+    PRIVATE
+    -fprofile-instr-generate -fcoverage-mapping
+  )
+  add_link_options(-fprofile-instr-generate -fcoverage-mapping)
+endif()
+
+
 
 if(CLOG_BUILD_SAMPLES)
   add_executable(CLogSample
@@ -137,7 +136,7 @@ if(CLOG_TEST)
       COMMENT "Run tests"
       POST_BUILD 
       WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-    COMMAND ${CMAKE_CTEST_COMMAND} -R "^CLogTestColor$" --output-on-failures
+      COMMAND LLVM_PROFILE_FILE=CLogTestColor.profraw ${CMAKE_CTEST_COMMAND} -R "^CLogTestColor$" --output-on-failures
   )
 endif()
 
@@ -155,12 +154,16 @@ doxygen_add_docs(clog_doc
 
 if(CLOG_ENABLE_COVERAGE)
   if(CLOG_TEST)
-    SETUP_TARGET_FOR_COVERAGE_GCOVR_HTML(
-        NAME CLogTestColor_coverage
-        EXECUTABLE CLogTestColor
-        DEPENDENCIES CLogTestColor
+    file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/CLogTestColor_coverage-llvm-cov)
+
+    add_custom_target(
+      CLogTestColor_coverage
+      COMMAND llvm-profdata-10 merge -sparse CLogTestColor.profraw -o CLogTestColor.profdata
+      COMMAND llvm-cov-10 show CLogTestColor --color --show-region-summary -show-line-counts-or-regions -output-dir=${CMAKE_BINARY_DIR}/CLogTestColor_coverage-llvm-cov -format="html" -instr-profile=CLogTestColor.profdata
+      DEPENDS CLogTestColor
     )
   endif()
+endif()
 
   if(CLOG_BUILD_SAMPLES)
     SETUP_TARGET_FOR_COVERAGE_GCOVR_HTML(

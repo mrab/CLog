@@ -144,7 +144,7 @@ int main(int argc, char **argv) {
   // Now we print some messages with parameters.
   // Anything tht works with printf should work here as well.
 
-  CLOG_TRC(&ctx, PLUGIN, "Integer is %d and string is %s", 123, "blubber");
+  CLOG_TRC(&ctx, PLUGIN, "Integer is %d and string is %s", 456456, "blubber");
   CLOG_DBG(&ctx, PLUGIN, "Here is a debug float %f", 2.3F);
   CLOG_INF(&ctx, PLUGIN, "I am some informational hex number %x", 12234U);
   CLOG_FTL(&ctx,

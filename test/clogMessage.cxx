@@ -103,7 +103,7 @@ TEST_F(CLogMessageTest, logMsgParamsAllSet) {
 
 TEST_F(CLogMessageTest, logMsgNoContext) {
   CLogContext *pCtx = nullptr;
-  ctx.minLevel = CLOG_LTRC;
+
   CLogLevel level = CLOG_LWRN;
   size_t tag = 0U;
   const char *file = "myFile.c";
@@ -116,6 +116,69 @@ TEST_F(CLogMessageTest, logMsgNoContext) {
 
   clog_logMessage(pCtx, level, tag, file, line, function, message);
   ASSERT_TRUE(isGuardOk());
+
+  // Buffer shall be untouched
+  ASSERT_THAT(std::vector<char>(buffer, buffer + BufferSize), Each(0));
+}
+
+TEST_F(CLogMessageTest, logMsgNoAdapter) {
+  CLogContext customCtx = {
+      nullptr,
+      5, // deliberately set an invalid adapter length
+      TagsNames,
+      ARRAY_LENGTH(TagsNames),
+      CLOG_LTRC,
+      buffer,
+      BufferSize,
+  };
+
+  CLogContext *pCtx = &customCtx;
+
+  CLogLevel level = CLOG_LWRN;
+  size_t tag = 0U;
+  const char *file = "myFile.c";
+  const unsigned int line = 123U;
+  const char *function = "foo()";
+  const char *message = "some msg";
+
+  EXPECT_CALL(*mock, filter(_)).Times(0);
+  EXPECT_CALL(*mock, printer(_)).Times(0);
+
+  clog_logMessage(pCtx, level, tag, file, line, function, message);
+  ASSERT_TRUE(isGuardOk());
+
+  // Buffer shall be untouched
+  ASSERT_THAT(std::vector<char>(buffer, buffer + BufferSize), Each(0));
+}
+
+TEST_F(CLogMessageTest, logMsgZeroAdapterLength) {
+  CLogContext customCtx = {
+      adapters,
+      0, // deliberately set adapter length to 0
+      TagsNames,
+      ARRAY_LENGTH(TagsNames),
+      CLOG_LTRC,
+      buffer,
+      BufferSize,
+  };
+
+  CLogContext *pCtx = &customCtx;
+
+  CLogLevel level = CLOG_LWRN;
+  size_t tag = 0U;
+  const char *file = "myFile.c";
+  const unsigned int line = 123U;
+  const char *function = "foo()";
+  const char *message = "some msg";
+
+  EXPECT_CALL(*mock, filter(_)).Times(0);
+  EXPECT_CALL(*mock, printer(_)).Times(0);
+
+  clog_logMessage(pCtx, level, tag, file, line, function, message);
+  ASSERT_TRUE(isGuardOk());
+
+  // Buffer shall be untouched
+  ASSERT_THAT(std::vector<char>(buffer, buffer + BufferSize), Each(0));
 }
 
 TEST_F(CLogMessageTest, logMsgFileNullPtr) {
@@ -164,6 +227,35 @@ TEST_F(CLogMessageTest, logMsgFunctionNullPtr) {
 
   clog_logMessage(pCtx, level, tag, file, line, function, message);
   ASSERT_TRUE(isGuardOk());
+}
+
+TEST_F(CLogMessageTest, logMsgAdapterPrinterIsNull) {
+  CLogAdapter adapter[] = {{CLogMessageTest::filter, nullptr}};
+  CLogContext customCtx = {
+      adapter,
+      1,
+      TagsNames,
+      ARRAY_LENGTH(TagsNames),
+      CLOG_LTRC,
+      buffer,
+      BufferSize,
+  };
+
+  CLogContext *pCtx = &customCtx;
+  CLogLevel level = CLOG_LWRN;
+  size_t tag = 0U;
+  const char *file = "myFile.c";
+  const unsigned int line = 123U;
+  const char *function = nullptr;
+  const char *message = "some msg";
+
+  EXPECT_CALL(*mock, filter(_)).Times(0);
+
+  clog_logMessage(pCtx, level, tag, file, line, function, message);
+  ASSERT_TRUE(isGuardOk());
+
+  // Buffer shall be untouched
+  ASSERT_THAT(std::vector<char>(buffer, buffer + BufferSize), Each(0));
 }
 
 TEST_F(CLogMessageTest, logMsgMsgNullPtr) {

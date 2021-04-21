@@ -113,17 +113,21 @@ void clog_logMessage(CLogContext *const ctx,
   CLogMessage msg = {file, line, function, ctx->messageBuffer, finalLevel, tagName};
 
   va_list args;
+  size_t size;
 
   va_start(args, message);
-  vsnprintf(ctx->messageBuffer, ctx->messageBufferSize, message, args);
+  size = vsnprintf(ctx->messageBuffer, ctx->messageBufferSize, message, args);
   va_end(args);
+
+  if(size >= ctx->messageBufferSize && ctx->messageBufferSize >= 3) {
+    // buffer overflow, let's indicate this
+    ctx->messageBuffer[ctx->messageBufferSize - 3] = '.';
+    ctx->messageBuffer[ctx->messageBufferSize - 2] = '.';
+  }
 
   ctx->messageBuffer[ctx->messageBufferSize - 1] = 0;
 
   for (size_t i = 0; i < ctx->adaptersSize; i++) {
-    if (!ctx->adapters[i].onMessage) {
-      continue;
-    }
     if (!ctx->adapters[i].messageFilter || ctx->adapters[i].messageFilter(&msg)) {
       ctx->adapters[i].onMessage(&msg);
     }

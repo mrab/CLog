@@ -227,7 +227,7 @@ TEST_F(CLogMacroTest, printTestOverflow) {
   EXPECT_CALL(*mock, filter(_)).Times(1).WillRepeatedly(Return(true));
   // Buffer is 12 characters long (including terminator),
   // so we have to expect that the string is truncated after the 11th one
-  EXPECT_CALL(*mock, printer(Field(&CLogMessage::message, StrEq("123456789AB")))).Times(1);
+  EXPECT_CALL(*mock, printer(Field(&CLogMessage::message, StrEq("123456789..")))).Times(1);
   CLOG_TRC(&ctx, IO, "123456789ABC")
   ASSERT_TRUE(isGuardOk());
 }
