@@ -1,0 +1,9 @@
+Language: Cpp
+ColumnLimit: 120
+AllowAllParametersOfDeclarationOnNextLine: false
+BinPackParameters: false
+BinPackArguments: false
+AlignTrailingComments: true
+AlignEscapedNewlines: Left
+AllowShortBlocksOnASingleLine: false
+AllowShortFunctionsOnASingleLine: false

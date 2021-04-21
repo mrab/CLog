@@ -1,0 +1,85 @@
+[
+{
+  "directory": "/home/mello/workspaceCLog/CLog/build",
+  "command": "/usr/bin/clang-10  -I../include  -g   -Wall -Werror -Wpedantic -Wextra -Wno-gnu-zero-variadic-macro-arguments -std=gnu99 -o CMakeFiles/CLogSample.dir/examples/sampleApp.c.o   -c /home/mello/workspaceCLog/CLog/examples/sampleApp.c",
+  "file": "/home/mello/workspaceCLog/CLog/examples/sampleApp.c"
+},
+
+{
+  "directory": "/home/mello/workspaceCLog/CLog/build",
+  "command": "/usr/bin/clang-10  -I../include  -g   -Wall -Werror -Wpedantic -Wextra -Wno-gnu-zero-variadic-macro-arguments -std=gnu99 -o CMakeFiles/CLog.dir/src/clog.c.o   -c /home/mello/workspaceCLog/CLog/src/clog.c",
+  "file": "/home/mello/workspaceCLog/CLog/src/clog.c"
+},
+
+{
+  "directory": "/home/mello/workspaceCLog/CLog/build",
+  "command": "/usr/bin/clang-10 -DCLOG_COLOR -I../include  -g   -Wall -Werror -Wpedantic -Wextra -Wno-gnu-zero-variadic-macro-arguments -std=gnu99 -o CMakeFiles/CLogSampleColor.dir/examples/sampleApp.c.o   -c /home/mello/workspaceCLog/CLog/examples/sampleApp.c",
+  "file": "/home/mello/workspaceCLog/CLog/examples/sampleApp.c"
+},
+
+{
+  "directory": "/home/mello/workspaceCLog/CLog/build",
+  "command": "/usr/bin/clang-10 -DCLOG_COLOR -DCLOG_GLOBAL_MIN_LEVEL=CLOG_MLWRN -I../include  -g   -Wall -Werror -Wpedantic -Wextra -Wno-gnu-zero-variadic-macro-arguments -std=gnu99 -o CMakeFiles/CLogSampleColorWarning.dir/examples/sampleApp.c.o   -c /home/mello/workspaceCLog/CLog/examples/sampleApp.c",
+  "file": "/home/mello/workspaceCLog/CLog/examples/sampleApp.c"
+},
+
+{
+  "directory": "/home/mello/workspaceCLog/CLog/build",
+  "command": "/usr/bin/clang++-10  -DCLOG_COLOR -I../test -I../include -isystem googletest-src/googletest/include -isystem googletest-src/googletest -isystem googletest-src/googlemock/include -isystem googletest-src/googlemock  -g   -Wall -Werror -Wpedantic -Wextra -Wno-gnu-zero-variadic-macro-arguments -std=gnu++14 -o CMakeFiles/CLogTestColor.dir/test/clogLevel.cxx.o -c /home/mello/workspaceCLog/CLog/test/clogLevel.cxx",
+  "file": "/home/mello/workspaceCLog/CLog/test/clogLevel.cxx"
+},
+
+{
+  "directory": "/home/mello/workspaceCLog/CLog/build",
+  "command": "/usr/bin/clang++-10  -DCLOG_COLOR -I../test -I../include -isystem googletest-src/googletest/include -isystem googletest-src/googletest -isystem googletest-src/googlemock/include -isystem googletest-src/googlemock  -g   -Wall -Werror -Wpedantic -Wextra -Wno-gnu-zero-variadic-macro-arguments -std=gnu++14 -o CMakeFiles/CLogTestColor.dir/test/clogMacros.cxx.o -c /home/mello/workspaceCLog/CLog/test/clogMacros.cxx",
+  "file": "/home/mello/workspaceCLog/CLog/test/clogMacros.cxx"
+},
+
+{
+  "directory": "/home/mello/workspaceCLog/CLog/build",
+  "command": "/usr/bin/clang++-10  -DCLOG_COLOR -I../test -I../include -isystem googletest-src/googletest/include -isystem googletest-src/googletest -isystem googletest-src/googlemock/include -isystem googletest-src/googlemock  -g   -Wall -Werror -Wpedantic -Wextra -Wno-gnu-zero-variadic-macro-arguments -std=gnu++14 -o CMakeFiles/CLogTestColor.dir/test/clogMessage.cxx.o -c /home/mello/workspaceCLog/CLog/test/clogMessage.cxx",
+  "file": "/home/mello/workspaceCLog/CLog/test/clogMessage.cxx"
+},
+
+{
+  "directory": "/home/mello/workspaceCLog/CLog/build",
+  "command": "/usr/bin/clang++-10  -DCLOG_COLOR -I../test -I../include -isystem googletest-src/googletest/include -isystem googletest-src/googletest -isystem googletest-src/googlemock/include -isystem googletest-src/googlemock  -g   -Wall -Werror -Wpedantic -Wextra -Wno-gnu-zero-variadic-macro-arguments -std=gnu++14 -o CMakeFiles/CLogTestColor.dir/test/clogFormatMessage.cxx.o -c /home/mello/workspaceCLog/CLog/test/clogFormatMessage.cxx",
+  "file": "/home/mello/workspaceCLog/CLog/test/clogFormatMessage.cxx"
+},
+
+{
+  "directory": "/home/mello/workspaceCLog/CLog/build",
+  "command": "/usr/bin/clang++-10  -DCLOG_COLOR -I../test -I../include -isystem googletest-src/googletest/include -isystem googletest-src/googletest -isystem googletest-src/googlemock/include -isystem googletest-src/googlemock  -g   -Wall -Werror -Wpedantic -Wextra -Wno-gnu-zero-variadic-macro-arguments -std=gnu++14 -o CMakeFiles/CLogTestColor.dir/test/clogLineHeader.cxx.o -c /home/mello/workspaceCLog/CLog/test/clogLineHeader.cxx",
+  "file": "/home/mello/workspaceCLog/CLog/test/clogLineHeader.cxx"
+},
+
+{
+  "directory": "/home/mello/workspaceCLog/CLog/build",
+  "command": "/usr/bin/clang-10 -DCLOG_COLOR -I../include  -g   -Wall -Werror -Wpedantic -Wextra -Wno-gnu-zero-variadic-macro-arguments -std=gnu99 -o CMakeFiles/CLogColor.dir/src/clog.c.o   -c /home/mello/workspaceCLog/CLog/src/clog.c",
+  "file": "/home/mello/workspaceCLog/CLog/src/clog.c"
+},
+
+{
+  "directory": "/home/mello/workspaceCLog/CLog/build",
+  "command": "/usr/bin/clang++-10   -isystem googletest-src/googlemock/include -isystem googletest-src/googlemock -isystem googletest-src/googletest/include -isystem googletest-src/googletest  -g   -Wall -Wshadow -Werror -Wconversion -DGTEST_HAS_PTHREAD=1 -fexceptions -W -Wpointer-arith -Wreturn-type -Wcast-qual -Wwrite-strings -Wswitch -Wunused-parameter -Wcast-align -Wchar-subscripts -Winline -Wredundant-decls -Wall -Werror -Wpedantic -Wextra -Wno-gnu-zero-variadic-macro-arguments -std=c++11 -o googletest-build/googlemock/CMakeFiles/gmock_main.dir/src/gmock_main.cc.o -c /home/mello/workspaceCLog/CLog/build/googletest-src/googlemock/src/gmock_main.cc",
+  "file": "/home/mello/workspaceCLog/CLog/build/googletest-src/googlemock/src/gmock_main.cc"
+},
+
+{
+  "directory": "/home/mello/workspaceCLog/CLog/build",
+  "command": "/usr/bin/clang++-10   -Igoogletest-src/googlemock/include -Igoogletest-src/googlemock -isystem googletest-src/googletest/include -isystem googletest-src/googletest  -g   -Wall -Wshadow -Werror -Wconversion -DGTEST_HAS_PTHREAD=1 -fexceptions -W -Wpointer-arith -Wreturn-type -Wcast-qual -Wwrite-strings -Wswitch -Wunused-parameter -Wcast-align -Wchar-subscripts -Winline -Wredundant-decls -Wall -Werror -Wpedantic -Wextra -Wno-gnu-zero-variadic-macro-arguments -std=c++11 -o googletest-build/googlemock/CMakeFiles/gmock.dir/src/gmock-all.cc.o -c /home/mello/workspaceCLog/CLog/build/googletest-src/googlemock/src/gmock-all.cc",
+  "file": "/home/mello/workspaceCLog/CLog/build/googletest-src/googlemock/src/gmock-all.cc"
+},
+
+{
+  "directory": "/home/mello/workspaceCLog/CLog/build",
+  "command": "/usr/bin/clang++-10   -isystem googletest-src/googletest/include -isystem googletest-src/googletest  -g   -Wall -Wshadow -Werror -Wconversion -DGTEST_HAS_PTHREAD=1 -fexceptions -W -Wpointer-arith -Wreturn-type -Wcast-qual -Wwrite-strings -Wswitch -Wunused-parameter -Wcast-align -Wchar-subscripts -Winline -Wredundant-decls -Wall -Werror -Wpedantic -Wextra -Wno-gnu-zero-variadic-macro-arguments -std=c++11 -o googletest-build/googletest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o -c /home/mello/workspaceCLog/CLog/build/googletest-src/googletest/src/gtest_main.cc",
+  "file": "/home/mello/workspaceCLog/CLog/build/googletest-src/googletest/src/gtest_main.cc"
+},
+
+{
+  "directory": "/home/mello/workspaceCLog/CLog/build",
+  "command": "/usr/bin/clang++-10   -Igoogletest-src/googletest/include -Igoogletest-src/googletest  -g   -Wall -Wshadow -Werror -Wconversion -DGTEST_HAS_PTHREAD=1 -fexceptions -W -Wpointer-arith -Wreturn-type -Wcast-qual -Wwrite-strings -Wswitch -Wunused-parameter -Wcast-align -Wchar-subscripts -Winline -Wredundant-decls -Wall -Werror -Wpedantic -Wextra -Wno-gnu-zero-variadic-macro-arguments -std=c++11 -o googletest-build/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.o -c /home/mello/workspaceCLog/CLog/build/googletest-src/googletest/src/gtest-all.cc",
+  "file": "/home/mello/workspaceCLog/CLog/build/googletest-src/googletest/src/gtest-all.cc"
+}
+]
