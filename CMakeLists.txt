@@ -23,10 +23,8 @@ message(" - CLOG_TEST:            ${CLOG_TEST}")
 message("CMAKE_MODULE_PATH: ${CMAKE_MODULE_PATH}")
 
 
-  APPEND_COVERAGE_COMPILER_FLAGS()
-endif()
-
-add_compile_options(-Wall -Werror -Wpedantic -Wextra -Wno-gnu-zero-variadic-macro-arguments)
+#add_compile_options(-Wall -Werror -Wpedantic -Wextra -Wno-gnu-zero-variadic-macro-arguments)
+add_compile_options(-Wall -Wpedantic -Wextra -Wno-gnu-zero-variadic-macro-arguments)
 
 if(CLOG_TEST)
   enable_testing()
